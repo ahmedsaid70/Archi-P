@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+
+<style>
+
+:root {
+  --pink: #ff87d4;
+  --blue: #87fffb;
+  --black: #171321;
+}
+img{
+    max-width: 100%;
+    max-height: 400px;
+}
+
+.cont{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    
+}
+
+/* Code in text */
+/* this applies to ALL code elements in the .post */
+code {
+  color: var(--pink);
+  font-family: monospace;
+  font-size: 1.125em;
+}
+
+/* this applies ONLY to code elements not inside a pre tag */
+</style>
+<body>
+    <main style="margin:auto;width: 70%;">
+        <h1>
+            Rapport Archi Prallele
+        </h1>
+            <ul>
+                <li><b>Full Name</b>: SEBAOUNE Ahmed</li>
+                <li><b>N_Etudiant</b>:22206789</li>
+                <li><b>Subject</b>: n-body problem</li>
+            </ul>
+            <article>
+                <section>
+                    <header><h2>Introduction</h2></header>
+                    <p>
+                        The n-body problem is a classic problem in physics and astronomy that involves predicting the motion of a group of celestial bodies (such as stars or planets) under the influence of their mutual gravitational forces. The problem is to determine the motion of each body in the group, given the initial positions and velocities of all bodies, and the masses and gravitational forces between them.
+                    </p>
+                    <p>
+                        The n-body problem can be formulated using Newton's laws of motion. Newton's laws state that the acceleration of a body is proportional to the net force acting on it, and that the force acting on a body is equal to the mass of the body multiplied by its acceleration.
+                    </p>
+                </section>
+                <section>
+                    <h2>The cost of the solution</h2>
+                    <p>
+                        Solving the n-body problem using Newton's laws of motion can be computationally expensive, especially for large values of n (the number of bodies). The cost of the computation increases rapidly as the number of bodies increases, due to the fact that the number of interactions between bodies is proportional to the square of the number of bodies.
+                    </p>
+                    <p>There are several reasons why the n-body problem can be computationally expensive:
+
+                        The number of calculations required increases with the square of the number of bodies, making it infeasible for large n.
+                        The equations of motion are non-linear, which makes it difficult to find analytical solutions.</p>
+
+                </section>
+                <section>
+                    <header>
+                       <h2> The initial set-up</h2>
+                    </header>
+                    <p>
+                        Before start mesuring the performances first we need to set up the processor frequency
+                    </p>
+                    <p>
+                        These are my processor's information
+                    </p>    
+                        <code>
+                            Architecture:            x86_64 <br>
+  CPU op-mode(s):        32-bit, 64-bit<br>
+  Address sizes:         39 bits physical, 48 bits virtual<br>
+  Byte Order:            Little Endian<br>
+CPU(s):                  8<br>
+  On-line CPU(s) list:   0-7<br>
+Vendor ID:               GenuineIntel<br>
+  Model name:            Intel(R) Core(TM) i7-7700HQ CPU @ 2.80GHz<br>
+    CPU family:          6<br>
+    Model:               158<br>
+    Thread(s) per core:  2<br>
+    Core(s) per socket:  4<br>
+    Socket(s):           1<br>
+    Stepping:            9<br>
+    Frequency boost:     enabled<br>
+    CPU max MHz:         2801,0000<br>
+    CPU min MHz:         800,0000<br>
+    BogoMIPS:            5599.85<br>
+    Flags:               fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mc
+                         a cmov pat ...<br>
+Virtualization features: <br>
+  Virtualization:        VT-x<br>
+Caches (sum of all):     <br>
+  L1d:                   128 KiB (4 instances)<br>
+  L1i:                   128 KiB (4 instances)<br>
+  L2:                    1 MiB (4 instances)<br>
+  L3:                    6 MiB (1 instance)<br>
+NUMA:                    <br>
+  NUMA node(s):          1<br>
+  NUMA node0 CPU(s):     0-7<br>
+Vulnerabilities:         <br>
+  Itlb multihit:         KVM: Mitigation: VMX disabled<br>
+  L1tf:                  Mitigation; PTE Inversion; VMX conditional cache flushe<br>
+                         s, SMT vulnerable<br>
+  Mds:                   Mitigation; Clear CPU buffers; SMT vulnerable<br>
+  Meltdown:              Mitigation; PTI<br>
+  Mmio stale data:       Mitigation; Clear CPU buffers; SMT vulnerable<br>
+  Retbleed:              Mitigation; IBRS<br>
+  Spec store bypass:     Mitigation; Speculative Store Bypass disabled via prctl
+                          and seccomp<br>
+  Spectre v1:            Mitigation; usercopy/swapgs barriers and __user pointer
+                          sanitization<br>
+  Spectre v2:            Mitigation; IBRS, IBPB conditional, RSB filling, PBRSB-
+                         eIBRS Not affected<br>
+  Srbds:                 Mitigation; Microcode<br>
+  Tsx async abort:       Not affected<br>
+
+                        </code>
+                        <p>
+                            We will fix the core 3 on 2.7 GHZ :
+                        </p>
+                        <code>
+                            sudo cpupower -c 3 frequency-set -d 2.70 GHz
+                        </code>
+                </section>
+                <section>
+                    <header><h2>Performance</h2></header>
+                    <h3>1. Initial perforamnce</h3>
+                    <p>With -O1 optimization flag and gcc compiler, 
+                        This is the resulted performances</p>
+                    <img src="imgs/1.png" alt="">
+                </section>
+                <h2>Using Ofast Flag</h2>
+                <section>
+                    <header class="im">
+                        <h3>1. transforming AoS into SoA</h3>
+                    </header>
+                    <div class="cont">
+
+                    <div class="bloc">       
+                    <h4>On GCC</h4>
+                    <img src="imgs/2.png" alt="">
+                    </div>
+                    <div class="bloc">       
+                    <h4>On Clang</h4>
+                    <img src="imgs/3.png" alt="">
+                    </div>
+                    </div>
+                </section>
+                <section class="im">
+                    <header>
+                        <h3>2. Eliminating theuseless divisons and replacing pow with multiplication  </h3>
+                    </header>
+                    <div class="cont">
+                    <div class="bloc">       
+
+                    <h4>On GCC</h4>
+                    
+                    <img src="imgs/4.png" alt="">
+                    </div>
+                    <div class="bloc">       
+
+                    <h4>On Clang</h4>
+                    <img src="imgs/5.png" alt="">
+                    </div> 
+                </div>
+                               </section>
+                </section>
+                <section class="im">
+                    <header>
+                        <h3>4. Unrolling loops using #pragma unroll directives</h3>
+                    </header>
+                    <div class="cont">
+
+                    <div class="bloc">       
+                    <h4>On GCC</h4>
+                    <img src="imgs/6.png" alt="">
+                    </div>
+                    <div class="bloc">       
+                    <h4>On Clang</h4>
+                    <img src="imgs/7.png" alt="">
+                    </div>
+                    </div>
+                    </section>
+                </section>
+                <section class="im">
+                    <header>
+                        <h3>5. using compiler auto-vectorization </h3>
+                    </header>
+                    <div class="cont">
+
+                    <div class="bloc">       
+                    <h4>On GCC</h4>
+                    <img src="imgs/8.png" alt="">
+                    </div>
+                    <div class="bloc">       
+
+                    <h4>On Clang</h4>
+                    <img src="imgs/9.png" alt=""> 
+                </div>
+                </div>
+                           </section>
+                </section>
+                <section class="im">
+                    <header>
+                        <h3>6. Optimizing using AVX2-256 Intrinsics Instructions</h3>
+                    </header>
+                    <div class="cont">
+                    <div class="bloc">       
+                    <h4>On GCC</h4>
+                    <img src="imgs/10.png" alt="">
+                    </div>
+                    <div class="bloc">       
+                    <h4>On Clang</h4>
+                    <img src="imgs/11.png" alt="">     
+                    </div>    
+                    </div>       
+                </section>
+                <section class="im">
+                    <h2>Test the simulation using different numbers of particles that fit into different cache levels</h2>
+                    <header>
+                        <h3>Cache L1 </h3>
+                        <p>In this processor the L1 cache has 128kb size with cache line of 64 bytes, so to fit into L1 cache we need about 5000 particles</p>
+                        <p>In the comparision we used The V6 optimization wich uses the Avx2 Intrinsics</p>
+                    </header>
+                    <div class="cont">
+                    <div class="bloc">       
+                    <h4>On GCC</h4>
+                    <img src="imgs/L1.png" alt="">
+                    </div>
+                    <div class="bloc">       
+                    <h4>On Clang</h4>
+                    <img src="imgs/L1clang.png" alt="">     
+                    </div>    
+                    </div>   
+                    <header>
+                        <h3>Cache L2 </h3>
+                        <p> L2 cache has 128kb size with cache line of 64 bytes, so to fit into L1 cache we need about 5000 particles</p>
+                        <p>In the comparision we used The V6 optimization wich uses the Avx2 Intrinsics</p>
+                    </header>
+                    <div class="cont">
+                    <div class="bloc">       
+                    <h4>On GCC</h4>
+                    <img src="imgs/L2.png" alt="">
+                    </div>
+                    <div class="bloc">       
+                    <h4>On Clang</h4>
+                    <img src="imgs/L2clang.png" alt="">     
+                    </div>    
+                    </div> 
+                    <header>
+                        <h3>Cache L2 </h3>
+                        <p> L2 cache has 1mb (4 instances of 265kb) size, so to fit into L2 cache we need about 40000 particles</p>
+                        <p>In the comparision we used The V6 optimization wich uses the Avx2 Intrinsics</p>
+                    </header>
+                    <div class="cont">
+                    <div class="bloc">       
+                    <h4>On GCC</h4>
+                    <img src="imgs/L2gcc.png" alt="">
+                    </div>
+                    <div class="bloc">       
+                    <h4>On Clang</h4>
+                    <img src="imgs/L2.png" alt="">     
+                    </div>    
+                    </div>          
+                </section>
+            </article>
+    </main>
+</body>
+</html>
